@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falcon Vision Pro - دوربین هوایی هوشمند</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1a237e;
+            --secondary: #283593;
+            --accent: #3949ab;
+            --light: #e8eaf6;
+            --dark: #0d1238;
+            --success: #2e7d32;
+            --warning: #f57c00;
+            --danger: #c62828;
+            --text: #333;
+            --text-light: #666;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 80px 0 50px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        /* Language Sections */
+        .language-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .language-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 35px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+
+        .feature-icon {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+            display: inline-block;
+            background: var(--light);
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            text-align: center;
+            border-radius: 50%;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-card ul {
+            list-style-type: none;
+        }
+
+        /* Persian List Styles */
+        .fa .feature-card li {
+            margin-bottom: 12px;
+            padding-right: 28px;
+            position: relative;
+        }
+
+        .fa .feature-card li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* English List Styles */
+        .en .feature-card li {
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .en .feature-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Specs */
+        .specs {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary);
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .en .section-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        /* Persian Table */
+        .fa table th {
+            background: var(--light);
+            color: var(--primary);
+            padding: 18px;
+            text-align: right;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .fa table td {
+            padding: 18px;
+            border-bottom: 1px solid #eee;
+            text-align: right;
+        }
+
+        /* English Table */
+        .en table th {
+            background: var(--light);
+            color: var(--primary);
+            padding: 18px;
+            text-align: left;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .en table td {
+            padding: 18px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .fa .btn {
+            flex-direction: row-reverse;
+        }
+
+        /* Project Structure */
+        .project-structure {
+            background: var(--dark);
+            color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .project-structure pre {
+            background: #1a1a2e;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            line-height: 1.5;
+            border-left: 4px solid var(--accent);
+            direction: ltr;
+            text-align: left;
+        }
+
+        .fa .project-structure pre {
+            border-right: 4px solid var(--accent);
+            border-left: none;
+        }
+
+        .project-structure code {
+            color: #8be9fd;
+        }
+
+        .comment {
+            color: #6272a4;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            margin-bottom: 50px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Persian Timeline */
+        .fa .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--accent);
+            top: 0;
+            bottom: 0;
+            right: 50%;
+            margin-right: -3px;
+        }
+
+        .fa .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            margin-bottom: 30px;
+        }
+
+        .fa .timeline-item:nth-child(odd) {
+            right: 0;
+        }
+
+        .fa .timeline-item:nth-child(even) {
+            right: 50%;
+        }
+
+        .timeline-content {
+            padding: 25px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .fa .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: -10px;
+            top: 25px;
+            background: white;
+            transform: rotate(45deg);
+            box-shadow: -3px 3px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .fa .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            top: 25px;
+            background: white;
+            transform: rotate(45deg);
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* English Timeline */
+        .en .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .en .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            margin-bottom: 30px;
+        }
+
+        .en .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .en .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .en .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            top: 25px;
+            background: white;
+            transform: rotate(45deg);
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .en .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: -10px;
+            top: 25px;
+            background: white;
+            transform: rotate(45deg);
+            box-shadow: -3px 3px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .checklist {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+
+        /* Persian Checklist */
+        .fa .checklist li {
+            margin-bottom: 10px;
+            padding-right: 25px;
+            position: relative;
+        }
+
+        .fa .checklist li::before {
+            content: '▢';
+            position: absolute;
+            right: 0;
+            color: var(--accent);
+        }
+
+        .fa .checklist li.done::before {
+            content: '✓';
+            color: var(--success);
+        }
+
+        /* English Checklist */
+        .en .checklist li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .en .checklist li::before {
+            content: '▢';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .en .checklist li.done::before {
+            content: '✓';
+            color: var(--success);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #ddd;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .social-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-5px) rotate(10deg);
+        }
+
+        .license {
+            background: var(--light);
+            padding: 25px;
+            border-radius: var(--radius);
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+            direction: ltr;
+        }
+
+        .fa .license {
+            text-align: right;
+            direction: rtl;
+            font-family: 'Iranian Sans', 'Segoe UI', sans-serif;
+        }
+
+        /* Quick Start */
+        .quick-start {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .code-block {
+            background: #1a1a2e;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            direction: ltr;
+            text-align: left;
+            border-left: 4px solid var(--accent);
+        }
+
+        .fa .code-block {
+            border-right: 4px solid var(--accent);
+            border-left: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Persian Timeline Mobile */
+            .fa .timeline::after {
+                right: 31px;
+            }
+            
+            .fa .timeline-item {
+                width: 100%;
+                padding-right: 70px;
+                padding-left: 25px;
+            }
+            
+            .fa .timeline-item:nth-child(even) {
+                right: 0;
+            }
+            
+            .fa .timeline-item:nth-child(odd) .timeline-content::after {
+                left: -10px;
+                right: auto;
+            }
+            
+            .fa .timeline-item:nth-child(even) .timeline-content::after {
+                left: -10px;
+                right: auto;
+            }
+            
+            /* English Timeline Mobile */
+            .en .timeline::after {
+                left: 31px;
+            }
+            
+            .en .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .en .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .en .timeline-item:nth-child(odd) .timeline-content::after {
+                right: -10px;
+                left: auto;
+            }
+            
+            .en .timeline-item:nth-child(even) .timeline-content::after {
+                right: -10px;
+                left: auto;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .language-switcher {
+                top: 10px;
+                left: 10px;
+            }
+            
+            .lang-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                min-width: auto;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Helper Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-4 {
+            margin-bottom: 40px;
+        }
+
+        .mt-4 {
+            margin-top: 40px;
+        }
+
+        /* Persian/English Text Alignment */
+        .fa {
+            text-align: right;
+        }
+
+        .en {
+            text-align: left;
+        }
+
+        .fa .text-right {
+            text-align: left;
+        }
+
+        .en .text-right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="fa">
+            <i class="fas fa-language"></i>
+            <span class="lang-text">فارسی</span>
+        </button>
+        <button class="lang-btn" data-lang="en">
+            <i class="fas fa-language"></i>
+            <span class="lang-text">English</span>
+        </button>
+    </div>
+
+  
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="badges">
+                <span class="badge">توسعه فعال</span>
+                <span class="badge">نسخه ۱.۰ آلفا</span>
+                <span class="badge">لایسنس MIT</span>
+                <span class="badge">سخت‌افزار باز</span>
+                <span class="badge">Active Development</span>
+                <span class="badge">Version 1.0 Alpha</span>
+            </div>
+            
+            <h1>Falcon Vision Pro</h1>
+            <p class="subtitle">
+                <span class="fa">سیستم هوشمند تصویربرداری هوایی - طراحی شده برای پهپادهای تاکتیکی | پشتیبانی از عملیات ۲۴ ساعته</span>
+                <span class="en" style="display: none;">Intelligent Aerial Imaging System - Designed for Tactical Drones | 24/7 Mission Support</span>
+            </p>
+            
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="window.open('https://github.com/falcon-vision', '_blank')">
+                    <i class="fab fa-github"></i>
+                    <span class="fa">مشاهده در گیت‌هاب</span>
+                    <span class="en" style="display: none;">View on GitHub</span>
+                </button>
+                <button class="btn btn-secondary" onclick="document.getElementById('docs').scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-book"></i>
+                    <span class="fa">مستندات پروژه</span>
+                    <span class="en" style="display: none;">Documentation</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Persian Content -->
+        <section class="language-section fa active" id="fa-content">
+            <!-- ویژگی‌های کلیدی -->
+            <section class="features fade-in">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>🔭 دید دوگانه</h3>
+                    <ul>
+                        <li>سنسور اپتیکال 20MP + زوم 10x</li>
+                        <li>دوربین حرارتی 640×512 LWIR</li>
+                        <li>پردازش همزمان دو تصویر</li>
+                        <li>هماهنگی طیف مرئی و حرارتی</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>🎯 هوش مصنوعی</h3>
+                    <ul>
+                        <li>ردیابی خودکار اهداف</li>
+                        <li>تشخیص حرکت هوشمند</li>
+                        <li>پردازش لبه (Edge AI)</li>
+                        <li>الگوریتم‌های بهینه‌شده</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>⚡ عملیاتی</h3>
+                    <ul>
+                        <li>وزن کم (۱.۵ کیلوگرم)</li>
+                        <li>مصرف برق پایین (۳۰W)</li>
+                        <li>نصب آسان روی پهپاد</li>
+                        <li>مقاوم در شرایط سخت</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- مشخصات فنی -->
+            <section class="specs fade-in" id="specs">
+                <h2 class="section-title">مشخصات فنی</h2>
+                
+                <h3 style="margin-bottom: 20px; color: var(--secondary);">سخت‌افزار</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>بخش</th>
+                            <th>مشخصات</th>
+                            <th>توضیح</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>سنسور EO</strong></td>
+                            <td>Sony IMX585 48MP</td>
+                            <td>کیفیت بالا در نور کم</td>
+                        </tr>
+                        <tr>
+                            <td><strong>سنسور IR</strong></td>
+                            <td>FLIR Boson 640</td>
+                            <td>عملکرد عالی در شب</td>
+                        </tr>
+                        <tr>
+                            <td><strong>پردازنده</strong></td>
+                            <td>Rockchip RK3588</td>
+                            <td>8-core ARM + NPU</td>
+                        </tr>
+                        <tr>
+                            <td><strong>گیمبال</strong></td>
+                            <td>2-axis Brushless</td>
+                            <td>پایدارسازی حرفه‌ای</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ارتباط</strong></td>
+                            <td>SiK Telemetry Radio</td>
+                            <td>برد تا 30km</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3 style="margin-bottom: 20px; color: var(--secondary);">نرم‌افزار</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>مؤلفه</th>
+                            <th>فناوری</th>
+                            <th>کاربرد</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>سیستم عامل</strong></td>
+                            <td>Linux Custom (Yocto)</td>
+                            <td>بهینه‌شده برای پردازش</td>
+                        </tr>
+                        <tr>
+                            <td><strong>پروتکل ارتباطی</strong></td>
+                            <td>MAVLink 2.0</td>
+                            <td>ارتباط با پهپاد</td>
+                        </tr>
+                        <tr>
+                            <td><strong>پردازش تصویر</strong></td>
+                            <td>OpenCV 4.8 + TensorFlow Lite</td>
+                            <td>الگوریتم‌های بینایی</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ایستگاه زمینی</strong></td>
+                            <td>Qt/C++ Cross-platform</td>
+                            <td>کنترل و مانیتورینگ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- شروع سریع -->
+            <section class="quick-start fade-in" id="docs">
+                <h2 class="section-title">شروع سریع</h2>
+                
+                <h3 style="margin-bottom: 15px; color: var(--primary);">پیش‌نیازها</h3>
+                <div class="code-block">
+# نصب ابزارهای توسعه
+sudo apt-get update
+sudo apt-get install git build-essential cmake python3-pip
+
+# کلون ریپوی پروژه
+git clone https://github.com/falcon-vision/falcon-vision-pro.git
+cd falcon-vision-pro
+
+# نصب وابستگی‌های پایتون
+pip3 install -r requirements.txt</div>
+                
+                <h3 style="margin-bottom: 15px; color: var(--primary);">کامپایل فریمورک</h3>
+                <div class="code-block">
+# ساخت سیستم عامل
+cd build
+./build-yocto.sh
+
+# کامپایل نرم‌افزار روی دستگاه
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make -j$(nproc)</div>
+            </section>
+
+            <!-- ساختار پروژه -->
+            <section class="project-structure fade-in">
+                <h2 class="section-title" style="color: white;">ساختار پروژه</h2>
+                <pre>
+falcon-vision-pro/
+├── hardware/                 <span class="comment"># طراحی سخت‌افزار</span>
+│   ├── eagle/               <span class="comment"># فایل‌های Eagle PCB</span>
+│   ├── mechanical/          <span class="comment"># طراحی 3D (STEP/STL)</span>
+│   └── bom/                 <span class="comment"># لیست قطعات</span>
+├── firmware/                <span class="comment"># فریمورک تعبیه‌شده</span>
+│   ├── src/                 <span class="comment"># سورس کد C/C++</span>
+│   ├── drivers/             <span class="comment"># درایورهای سخت‌افزار</span>
+│   └── configs/             <span class="comment"># فایل‌های پیکربندی</span>
+├── software/                <span class="comment"># نرم‌افزار سطح بالا</span>
+│   ├── image-processing/    <span class="comment"># پردازش تصویر</span>
+│   ├── ai-models/           <span class="comment"># مدل‌های هوش مصنوعی</span>
+│   ├── ground-station/      <span class="comment"># ایستگاه زمینی</span>
+│   └── telemetry/           <span class="comment"># ارتباطات</span>
+├── docs/                    <span class="comment"># مستندات</span>
+│   ├── schematics/          <span class="comment"># شماتیک‌ها</span>
+│   ├── manuals/             <span class="comment"># راهنماهای کاربری</span>
+│   └── test-reports/        <span class="comment"># گزارش تست</span>
+└── tools/                   <span class="comment"># ابزارهای کمکی</span>
+    ├── calibration/         <span class="comment"># کالیبراسیون</span>
+    ├── flashing/            <span class="comment"># فلش‌کننده‌ها</span>
+    └── debug/               <span class="comment"># ابزار دیباگ</span></pre>
+            </section>
+
+          
+            <!-- نقشه راه -->
+            <section class="roadmap fade-in">
+                <h2 class="section-title">نقشه راه توسعه</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">نسخه ۱.۰ (آلفا) - Q2 2024</div>
+                            <ul class="checklist">
+                                <li class="done">طراحی اولیه سخت‌افزار</li>
+                                <li>نمونه اولیه PCB</li>
+                                <li>پایه نرم‌افزار</li>
+                                <li>تست‌های اولیه</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">نسخه ۲.۰ (بتا) - Q3 2024</div>
+                            <ul class="checklist">
+                                <li>یکپارچه‌سازی کامل</li>
+                                <li>تست‌های میدانی</li>
+                                <li>بهینه‌سازی عملکرد</li>
+                                <li>رابط کاربری پیشرفته</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">نسخه ۳.۰ (رهایی) - Q4 2024</div>
+                            <ul class="checklist">
+                                <li>مستندات کامل</li>
+                                <li>پشتیبانی از افزونه‌ها</li>
+                                <li>انتشار عمومی</li>
+                                <li>پشتیبانی تجاری</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- English Content -->
+        <section class="language-section en" id="en-content">
+            <!-- Key Features -->
+            <section class="features fade-in">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>🔭 Dual Vision System</h3>
+                    <ul>
+                        <li>20MP Optical Sensor + 10x Zoom</li>
+                        <li>640×512 LWIR Thermal Camera</li>
+                        <li>Simultaneous Dual-stream Processing</li>
+                        <li>Visible & Thermal Spectrum Fusion</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>🎯 AI & Machine Learning</h3>
+                    <ul>
+                        <li>Auto Target Tracking</li>
+                        <li>Intelligent Motion Detection</li>
+                        <li>Edge AI Processing</li>
+                        <li>Optimized Computer Vision Algorithms</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>⚡ Operational Excellence</h3>
+                    <ul>
+                        <li>Lightweight (1.5 kg)</li>
+                        <li>Low Power Consumption (30W)</li>
+                        <li>Easy Drone Integration</li>
+                        <li>Rugged & Weather Resistant</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Technical Specifications -->
+            <section class="specs fade-in" id="specs-en">
+                <h2 class="section-title">Technical Specifications</h2>
+                
+                <h3 style="margin-bottom: 20px; color: var(--secondary);">Hardware Components</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Specifications</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>EO Sensor</strong></td>
+                            <td>Sony IMX585 48MP</td>
+                            <td>Excellent low-light performance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IR Sensor</strong></td>
+                            <td>FLIR Boson 640</td>
+                            <td>Premium night vision capability</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Processor</strong></td>
+                            <td>Rockchip RK3588</td>
+                            <td>8-core ARM + NPU for edge AI</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gimbal</strong></td>
+                            <td>2-axis Brushless</td>
+                            <td>Professional image stabilization</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Telemetry</strong></td>
+                            <td>SiK Radio 915MHz</td>
+                            <td>Up to 30km range</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3 style="margin-bottom: 20px; color: var(--secondary);">Software Stack</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Layer</th>
+                            <th>Technology</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Operating System</strong></td>
+                            <td>Custom Linux (Yocto)</td>
+                            <td>Optimized for embedded vision</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Communication</strong></td>
+                            <td>MAVLink 2.0</td>
+                            <td>Drone communication protocol</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Computer Vision</strong></td>
+                            <td>OpenCV 4.8 + TensorFlow Lite</td>
+                            <td>Image processing & AI models</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ground Station</strong></td>
+                            <td>Qt/C++ Cross-platform</td>
+                            <td>Control & monitoring interface</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Quick Start -->
+            <section class="quick-start fade-in" id="docs-en">
+                <h2 class="section-title">Quick Start Guide</h2>
+                
+                <h3 style="margin-bottom: 15px; color: var(--primary);">Prerequisites</h3>
+                <div class="code-block">
+# Install development tools
+sudo apt-get update
+sudo apt-get install git build-essential cmake python3-pip
+
+# Clone the repository
+git clone https://github.com/falcon-vision/falcon-vision-pro.git
+cd falcon-vision-pro
+
+# Install Python dependencies
+pip3 install -r requirements.txt</div>
+                
+                <h3 style="margin-bottom: 15px; color: var(--primary);">Build & Compile</h3>
+                <div class="code-block">
+# Build the OS image
+cd build
+./build-yocto.sh
+
+# Compile the application
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make -j$(nproc)</div>
+            </section>
+
+            <!-- Project Structure -->
+            <section class="project-structure fade-in">
+                <h2 class="section-title" style="color: white;">Project Structure</h2>
+                <pre>
+falcon-vision-pro/
+├── hardware/                 <span class="comment"># Hardware designs</span>
+│   ├── pcb/                 <span class="comment"># PCB design files (Eagle/KiCAD)</span>
+│   ├── mechanical/          <span class="comment"># 3D models (STEP/STL)</span>
+│   └── bom/                 <span class="comment"># Bill of Materials</span>
+├── firmware/                <span class="comment"># Embedded firmware</span>
+│   ├── src/                 <span class="comment"># C/C++ source code</span>
+│   ├── drivers/             <span class="comment"># Hardware drivers</span>
+│   └── configs/             <span class="comment"># Configuration files</span>
+├── software/                <span class="comment"># High-level software</span>
+│   ├── image-processing/    <span class="comment"># Computer vision algorithms</span>
+│   ├── ai-models/           <span class="comment"># AI/ML models (TensorFlow)</span>
+│   ├── ground-station/      <span class="comment"># Ground control application</span>
+│   └── telemetry/           <span class="comment"># Communication modules</span>
+├── docs/                    <span class="comment"># Documentation</span>
+│   ├── schematics/          <span class="comment"># Circuit diagrams</span>
+│   ├── manuals/             <span class="comment"># User & developer manuals</span>
+│   └── test-reports/        <span class="comment"># Testing documentation</span>
+└── tools/                   <span class="comment"># Development tools</span>
+    ├── calibration/         <span class="comment"># Camera calibration tools</span>
+    ├── flashing/            <span class="comment"># Flashing utilities</span>
+    └── debug/               <span class="comment"># Debugging tools</span></pre>
+            </section>
+
+            <!-- Roadmap -->
+            <section class="roadmap fade-in">
+                <h2 class="section-title">Development Roadmap</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Version 1.0 (Alpha) - Q2 2024</div>
+                            <ul class="checklist">
+                                <li class="done">Initial hardware design</li>
+                                <li>PCB prototype</li>
+                                <li>Software foundation</li>
+                                <li>Initial testing</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Version 2.0 (Beta) - Q3 2024</div>
+                            <ul class="checklist">
+                                <li>Full integration</li>
+                                <li>Field testing</li>
+                                <li>Performance optimization</li>
+                                <li>Advanced UI/UX</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Version 3.0 (Release) - Q4 2024</div>
+                            <ul class="checklist">
+                                <li>Complete documentation</li>
+                                <li>Plugin support</li>
+                                <li>Public release</li>
+                                <li>Commercial support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+      <!-- License (Shared) -->
+        <section class="specs fade-in">
+            <h2 class="section-title">
+                <span class="fa">لایسنس</span>
+                <span class="en" style="display: none;">License</span>
+            </h2>
+            <div class="license">
+                <span class="fa">
+                    لایسنس MIT
+                    کپی رایت (c) 2024 Falcon Vision Team
+                    اجازه استفاده رایگان از این نرم‌افزار و سخت‌افزار برای اهداف شخصی، 
+                    آموزشی و تجاری با رعایت شرایط زیر داده می‌شود:
+                    ۱. ذکر نام اصلی پروژه
+                    ۲. قراردادن متن لایسنس در تمامی کپی‌ها
+                    ۳. عدم مسئولیت در قبال خسارات ناشی از استفاده
+                </span>
+                <span class="en" style="display: none;">
+                    MIT License
+                    Copyright (c) 2024 Falcon Vision Team
+                    Permission is hereby granted, free of charge, to any person obtaining a copy
+                    of this software and associated hardware designs, to deal in the Software 
+                    without restriction, including without limitation the rights to use, copy, 
+                    modify, merge, publish, distribute, sublicense, and/or sell copies of the 
+                    Software, and to permit persons to whom the Software is furnished to do so, 
+                    subject to the following conditions:
+                    1. The above copyright notice and this permission notice shall be included 
+                       in all copies or substantial portions of the Software.
+                    2. Attribution to the original project "Falcon Vision Pro" must be included.
+                    3. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND...
+                </span>
+            </div>
+        </section>
+
+        <!-- Footer (Shared) -->
+        <footer class="fade-in">
+            <h3 style="margin-bottom: 20px; color: var(--primary);">
+                <span class="fa">ارتباط و پشتیبانی</span>
+                <span class="en" style="display: none;">Contact & Support</span>
+            </h3>
+            
+            <div class="social-icons">
+                <a href="https://github.com/falcon-vision" class="social-icon" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:team@falcon-vision.ir" class="social-icon">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://t.me/falcon_vision_channel" class="social-icon" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://falcon-vision.ir" class="social-icon" target="_blank">
+                    <i class="fas fa-globe"></i>
+                </a>
+            </div>
+            
+            <p style="margin: 20px 0; color: var(--text-light);">
+                <span class="fa">
+                    <i class="fas fa-users"></i> تیم توسعه: 
+                    <strong>مدیر پروژه:</strong> [نام شما] | 
+                    <strong>مهندس سخت‌افزار:</strong> [نام] | 
+                    <strong>مهندس نرم‌افزار:</strong> [نام]
+                </span>
+                <span class="en" style="display: none;">
+                    <i class="fas fa-users"></i> Development Team: 
+                    <strong>Project Lead:</strong> [Your Name] | 
+                    <strong>Hardware Engineer:</strong> [Name] | 
+                    <strong>Software Engineer:</strong> [Name]
+                </span>
+            </p>
+            
+            <div style="margin: 40px 0;">
+                <h3 style="margin-bottom: 15px; color: var(--primary);">
+                    <span class="fa">🚀 آماده‌ای برای پرواز؟</span>
+                    <span class="en" style="display: none;">🚀 Ready for Takeoff?</span>
+                </h3>
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">
+                    <span class="fa">بیایید آینده تصویربرداری هوایی را با هم بسازیم!</span>
+                    <span class="en" style="display: none;">Let's build the future of aerial imaging together!</span>
+                </p>
+                
+                <div style="background: var(--dark); color: white; padding: 20px; border-radius: 8px; display: inline-block; font-family: 'Courier New', monospace;">
+                    echo "Falcon Vision - Seeing Beyond Limits"
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                <button class="btn btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <i class="fas fa-arrow-up"></i>
+                    <span class="fa">بازگشت به بالا</span>
+                    <span class="en" style="display: none;">Back to Top</span>
+                </button>
+            </div>
+            
+            <p style="margin-top: 40px; color: var(--text-light); font-style: italic;">
+                <span class="fa">"هر پرواز بزرگ، با یک دید واضح شروع می‌شود"</span>
+                <span class="en" style="display: none;">"Every great flight starts with a clear vision"</span>
+            </p>
+            
+            <p style="margin-top: 20px; color: var(--text-light);">
+                <span class="fa">⭐ اگر این پروژه رو دوست دارید، در گیت‌هاب ستاره بدید!</span>
+                <span class="en" style="display: none;">⭐ If you like this project, give it a star on GitHub!</span>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Language Switcher
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const languageSections = document.querySelectorAll('.language-section');
+            const body = document.body;
+            
+            // Switch language function
+            function switchLanguage(lang) {
+                // Update button states
+                langButtons.forEach(btn => {
+                    if (btn.dataset.lang === lang) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                // Update language sections
+                languageSections.forEach(section => {
+                    if (section.id === `${lang}-content`) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+                
+                // Update body class for RTL/LTR
+                if (lang === 'fa') {
+                    body.dir = 'rtl';
+                    body.classList.remove('en');
+                    body.classList.add('fa');
+                } else {
+                    body.dir = 'ltr';
+                    body.classList.remove('fa');
+                    body.classList.add('en');
+                }
+                
+                // Update all language-specific elements
+                document.querySelectorAll('.fa, .en').forEach(el => {
+                    if (el.classList.contains(lang)) {
+                        el.style.display = 'inline';
+                    } else {
+                        el.style.display = 'none';
+                    }
+                });
+                
+                // Save preference
+                localStorage.setItem('preferred-language', lang);
+            }
+            
+            // Add click events to language buttons
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    switchLanguage(lang);
+                });
+            });
+            
+            // Check for saved language preference
+            const savedLang = localStorage.getItem('preferred-language');
+            if (savedLang) {
+                switchLanguage(savedLang);
+            } else {
+                // Default to Persian
+                switchLanguage('fa');
+            }
+            
+            // Fade in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+            
+            // Animate checklist progress
+            setTimeout(() => {
+                const checklistItems = document.querySelectorAll('.checklist li');
+                checklistItems.forEach((item, index) => {
+                    if (index === 0) {
+                        setTimeout(() => {
+                            item.classList.add('done');
+                        }, 500);
+                    }
+                });
+            }, 1000);
+            
+            // Button animations
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
